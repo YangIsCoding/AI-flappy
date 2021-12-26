@@ -1,0 +1,80 @@
+[NEAT]
+fitness_criterion     = max  # genome fitness集合的最大準則
+fitness_threshold     = 3.9  # fitness閾值
+pop_size              = 150  # 種群數量
+# if True，所有species由於stagnation become extinct時，重新生成一個random種群
+# if False，CompleteExtinctionException異常會被丟擲
+reset_on_extinction   = False
+
+[DefaultGenome]
+# node activation options
+activation_default      = sigmoid
+activation_mutate_rate  = 0.0  # activation函式變異概率，可能變異為activation_options中的函式
+activation_options      = sigmoid  # activation_function列表
+
+# node aggregation options
+aggregation_default     = sum  # 即w0*v0+w1*v1+...+wn*vn,sum就是求和
+aggregation_mutate_rate = 0.0
+aggregation_options     = sum
+
+# node bias options
+bias_init_mean          = 0.0  # 正態分佈的mean
+bias_init_stdev         = 1.0  # 正態分佈的stdev
+bias_max_value          = 30.0  # bias最大值
+bias_min_value          = -30.0  # bias最小值
+bias_mutate_power       = 0.5  # 以0為中心的正態分佈的標準差來得到bias的變異值
+bias_mutate_rate        = 0.7  # bias加上一個random值的變異概率
+bias_replace_rate       = 0.1  # bias用一個random值替換的變異概率
+
+# genome compatibility options
+compatibility_disjoint_coefficient = 1.0  # disjoint和excess基因數量在計算genomic distance的係數
+compatibility_weight_coefficient   = 0.5  # 基因組平均weight差值在計算genomic distance的係數
+# connection add/remove rates
+conn_add_prob           = 0.5  # 在現存node之間新增connection的變異概率
+conn_delete_prob        = 0.5  # 刪除現存connection之間的變異概率
+
+# connection enable options
+enabled_default         = True  # 新建立的connection的enable是True還是False
+enabled_mutate_rate     = 0.01  # enabled狀態變為disabled概率
+
+feed_forward            = True  # True表示不存在recurrent連線
+initial_connection      = full  #
+
+# node add/remove rates
+node_add_prob           = 0.2  # 新增新結點的變異概率
+node_delete_prob        = 0.2  # 刪除新結點的變異概率
+
+# network parameters
+num_hidden              = 0
+num_inputs              = 2
+num_outputs             = 1
+
+# node response options  # 同bias options
+response_init_mean      = 1.0
+response_init_stdev     = 0.0
+response_max_value      = 30.0
+response_min_value      = -30.0
+response_mutate_power   = 0.0
+response_mutate_rate    = 0.0
+response_replace_rate   = 0.0
+
+# connection weight options  # 同bias options
+weight_init_mean        = 0.0
+weight_init_stdev       = 1.0
+weight_max_value        = 30
+weight_min_value        = -30
+weight_mutate_power     = 0.5
+weight_mutate_rate      = 0.8
+weight_replace_rate     = 0.1
+
+[DefaultSpeciesSet]
+compatibility_threshold = 3.0  # genomic distance小於此距離被認為是同一物種
+
+[DefaultStagnation]
+species_fitness_func = max  # 計算種群適應度的函式為種群中某個fitness最大的個體
+max_stagnation       = 20  # 超過此次數，該種群被視為stagnant並且移除
+species_elitism      = 2  # 保護該數量的fitness最大的種群不受max_stagnation的影響
+
+[DefaultReproduction]
+elitism            = 2  # 每個種群的elitism個最優個體被保留到下一代
+survival_threshold = 0.2  # 每一代每個species允許繁殖的概率
